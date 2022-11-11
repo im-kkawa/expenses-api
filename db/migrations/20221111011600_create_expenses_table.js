@@ -6,7 +6,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('expenses', function (table) {
     table.increments('id').primary(); // Set this column as the primary key
     table.date('date').notNullable();
-    table.string('item', 32).notNullable();
+    table.string('category', 32).notNullable();
     table.string('note', 32);
     table.bigint('deposit');
     table.bigint('withdrawal');
