@@ -4,6 +4,8 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 chai.should();
 
+// npm run seedを実行するため
+const { execSync } = require('child_process');
 const defaultData = require('./_defaultData.json');
 
 const { setupServer } = require('../src/server');
@@ -12,6 +14,7 @@ const server = setupServer();
 describe('expenses API Server', () => {
   describe('サンプルテスト', () => {
     let request;
+    let stdout;
 
     beforeEach(() => {
       request = chai.request(server);
@@ -58,6 +61,11 @@ describe('expenses API Server', () => {
       request = chai.request(server);
     });
 
+    afterEach(() => {
+      stdout = execSync('npm run seed');
+      console.log(`stdout: ${stdout.toString()}`);
+    });
+
     it('[post][/expenses]家計簿の登録', async () => {
       // chai.expect(1).to.equal(1);
       let postData = {
@@ -89,7 +97,7 @@ describe('expenses API Server', () => {
 
       const res = await request.post('/expenses').send(postData);
 
-      postData.id = 7;
+      postData.id = 6;
       defaultData.push(postData);
       const expected = defaultData;
       res.should.be.json;
