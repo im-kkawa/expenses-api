@@ -40,5 +40,14 @@ describe('expenses API Server', () => {
       res.should.be.json;
       JSON.parse(res.text).should.deep.equal(defaultData);
     });
+
+    it('[get][/expenses]家計簿の全てのデータを取得 by ID', async () => {
+      const testID = 3;
+      const expected = defaultData.filter((eachData) => eachData.id === testID);
+
+      const res = await request.get('/expenses').query({ id: testID });
+      res.should.be.json;
+      JSON.parse(res.text).should.deep.equal(expected);
+    });
   });
 });

@@ -1,5 +1,4 @@
 const express = require('express');
-
 const config = require('../knexfile');
 const knex = require('knex')(config);
 
@@ -12,15 +11,27 @@ const setupServer = () => {
   });
 
   app.get('/expenses', (req, res) => {
-    knex('expenses')
-      .select('*')
-      .then((result) => {
-        // console.log(result);
-        res.json(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const id = req.query.id;
+    if (typeof id === 'undefined') {
+      knex('expenses')
+        .select('*')
+        .then((result) => {
+          res.json(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (id.match(/^[0-9]+$/)) {
+      knex('expenses')
+        .select('*')
+        .where({ id: id })
+        .then((result) => {
+          res.json(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   });
 
   return app;
