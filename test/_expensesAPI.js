@@ -50,4 +50,31 @@ describe('expenses API Server', () => {
       JSON.parse(res.text).should.deep.equal(expected);
     });
   });
+
+  describe('postテスト', () => {
+    let request;
+
+    beforeEach(() => {
+      request = chai.request(server);
+    });
+
+    it('[post][/expenses]家計簿の登録', async () => {
+      // chai.expect(1).to.equal(1);
+      let postData = {
+        date: '20221105',
+        category: '水道光熱費',
+        note: '10月分水道代',
+        deposit: 0,
+        withdrawal: 2000,
+      };
+
+      const res = await request.post('/expenses').send(postData);
+
+      postData.id = 6;
+      defaultData.push(postData);
+      const expected = defaultData;
+      res.should.be.json;
+      JSON.parse(res.text).should.deep.equal(postData);
+    });
+  });
 });

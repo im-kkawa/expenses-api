@@ -34,7 +34,42 @@ const setupServer = () => {
     }
   });
 
+  app.post('/expenses', (req, res) => {
+    const postData = req.body;
+    let currentSequence;
+    knex('expenses')
+      .max('id')
+      .then((result) => {
+        currentSequence = result[0]['max'];
+        postData.id = currentSequence + 1;
+        knex('expenses')
+          .insert(postData)
+          .catch((err) => {
+            console.log(err);
+          });
+        res.json(postData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   return app;
 };
+
+// async function getAllData(table) {
+//   let res;
+//   await knex(table)
+//     .select('*')
+//     .then((result) => {
+//       // console.log(result);
+//       return result;
+//     })
+//     .catch((err) => {
+//       res = err;
+//     });
+//   // console.log(res);
+//   // return res;
+// }
 
 module.exports = { setupServer };

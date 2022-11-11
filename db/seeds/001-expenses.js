@@ -17,7 +17,7 @@ exports.seed = async function (knex) {
       id: 2,
       date: 20221101,
       category: '給料',
-      note: '11月の給料',
+      note: '10月分給料',
       deposit: 300000,
       withdrawal: 0,
     },
