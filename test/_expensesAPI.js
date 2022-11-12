@@ -116,7 +116,7 @@ describe('expenses API Server', () => {
       const testID = 3;
       const res = await request.delete('/expenses').query({ id: testID });
       res.should.be.json;
-      JSON.parse(res.text).should.deep.equal(testID);
+      JSON.parse(res.text).should.deep.equal(deleteTestData);
     });
   });
 });

@@ -32,11 +32,9 @@ const setupServer = () => {
   app.delete('/expenses', async (req, res) => {
     const id = req.query.id;
     let resData;
-    knex('expenses')
-      .where({ id: id })
-      .del()
-      .catch((err) => console.log(err));
-    res.json(Number(id));
+    await deleteData('expenses', id);
+    resData = await selectAllData('expenses');
+    res.json(resData);
   });
 
   return app;
@@ -68,6 +66,13 @@ function insertData(table, postData) {
         .insert(postData)
         .catch((err) => console.log(err));
     })
+    .catch((err) => console.log(err));
+}
+
+function deleteData(table, id) {
+  return knex(table)
+    .where({ id: id })
+    .del()
     .catch((err) => console.log(err));
 }
 
