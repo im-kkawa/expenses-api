@@ -6,10 +6,12 @@ chai.should();
 
 // npm run seedを実行するため
 const { execSync } = require('child_process');
-let defaultData = require('./_defaultData.json');
-let postTestData1 = require('./_postTestData1.json');
-let postTestData2 = require('./_postTestData2.json');
-let deleteTestData = require('./_deleteTestData.json');
+const defaultData = require('./_defaultData.json');
+const postTestData1 = require('./_postTestData1.json');
+const postTestData2 = require('./_postTestData2.json');
+const deleteTestData = require('./_deleteTestData.json');
+const patchTestData1 = require('./_patchTestData1.json');
+const patchTestData2 = require('./_patchTestData2.json');
 
 const { setupServer } = require('../src/server');
 const server = setupServer();
@@ -117,6 +119,41 @@ describe('expenses API Server', () => {
       const res = await request.delete('/expenses').query({ id: testID });
       res.should.be.json;
       JSON.parse(res.text).should.deep.equal(deleteTestData);
+    });
+  });
+
+  describe('patch/putテスト', () => {
+    let request;
+
+    beforeEach(() => {
+      request = chai.request(server);
+    });
+
+    afterEach(async () => {
+      await execSync('npm run seed');
+    });
+
+    it('[patch][/expenses]家計簿の修正（1項目）', async () => {
+      const sendBody = {
+        id: 3,
+        note: '外食（カフェ）',
+      };
+
+      const res = await request.patch('/expenses').send(sendBody);
+      res.should.be.json;
+      JSON.parse(res.text).should.deep.equal(patchTestData1);
+    });
+
+    it('[patch][/expenses]家計簿の修正（2項目）', async () => {
+      const sendBody = {
+        id: 3,
+        note: '外食（カフェ）',
+        withdrawal: 2000,
+      };
+
+      const res = await request.patch('/expenses').send(sendBody);
+      res.should.be.json;
+      JSON.parse(res.text).should.deep.equal(patchTestData2);
     });
   });
 });

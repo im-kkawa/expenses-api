@@ -37,6 +37,16 @@ const setupServer = () => {
     res.json(resData);
   });
 
+  app.patch('/expenses', async (req, res) => {
+    const sendData = req.body;
+    const id = sendData.id;
+    let resData;
+    await patchData('expenses', id, sendData);
+
+    resData = await selectAllData('expenses');
+    res.json(resData);
+  });
+
   return app;
 };
 
@@ -73,6 +83,13 @@ function deleteData(table, id) {
   return knex(table)
     .where({ id: id })
     .del()
+    .catch((err) => console.log(err));
+}
+
+function patchData(table, id, sendData) {
+  return knex(table)
+    .where({ id: id })
+    .update(sendData)
     .catch((err) => console.log(err));
 }
 

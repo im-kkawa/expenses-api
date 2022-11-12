@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "date": "2022-10-31T15:00:00.000Z",
+    "category": "交際費",
+    "note": "会社の飲み会",
+    "deposit": "0",
+    "withdrawal": "5000"
+  },
+  {
+    "id": 2,
+    "date": "2022-10-31T15:00:00.000Z",
+    "category": "給料",
+    "note": "10月分給料",
+    "deposit": "300000",
+    "withdrawal": "0"
+  },
+  {
+    "id": 4,
+    "date": "2022-11-01T15:00:00.000Z",
+    "category": "食費",
+    "note": "数日分のまとめ買い",
+    "deposit": "0",
+    "withdrawal": "3000"
+  },
+  {
+    "id": 5,
+    "date": "2022-11-01T15:00:00.000Z",
+    "category": "娯楽費",
+    "note": "書籍の購入",
+    "deposit": "0",
+    "withdrawal": "2000"
+  },
+  {
+    "id": 3,
+    "date": "2022-11-01T15:00:00.000Z",
+    "category": "食費",
+    "note": "外食（カフェ）",
+    "deposit": "0",
+    "withdrawal": "1000"
+  }
+]
