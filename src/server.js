@@ -25,18 +25,17 @@ const setupServer = () => {
     const postData = req.body;
     let resData;
     await insertData('expenses', postData);
-    // resData = await selectAllData('expenses');
-    // console.log(resData);
-    res.json(postData);
+    resData = await selectAllData('expenses');
+    res.json(resData);
   });
 
   app.delete('/expenses', async (req, res) => {
     const id = req.query.id;
+    let resData;
     knex('expenses')
       .where({ id: id })
       .del()
       .catch((err) => console.log(err));
-
     res.json(Number(id));
   });
 

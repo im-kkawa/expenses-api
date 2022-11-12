@@ -7,6 +7,9 @@ chai.should();
 // npm run seedを実行するため
 const { execSync } = require('child_process');
 let defaultData = require('./_defaultData.json');
+let postTestData1 = require('./_postTestData1.json');
+let postTestData2 = require('./_postTestData2.json');
+let deleteTestData = require('./_deleteTestData.json');
 
 const { setupServer } = require('../src/server');
 const server = setupServer();
@@ -79,30 +82,22 @@ describe('expenses API Server', () => {
       };
 
       const res = await request.post('/expenses').send(postData);
-
-      postData.id = 6;
-      defaultData.push(postData);
-      const expected = defaultData;
       res.should.be.json;
-      JSON.parse(res.text).should.deep.equal(postData);
+      JSON.parse(res.text).should.deep.equal(postTestData1);
     });
 
     it('[post][/expenses]家計簿の登録（noteが空欄）', async () => {
-      // chai.expect(1).to.equal(1);
       let postData = {
         date: '20221105',
         category: '水道光熱費',
         note: '',
         deposit: 0,
-        withdrawal: 1000,
+        withdrawal: 2000,
       };
 
       const res = await request.post('/expenses').send(postData);
-
-      postData.id = 6;
-      const expected = defaultData;
       res.should.be.json;
-      JSON.parse(res.text).should.deep.equal(postData);
+      JSON.parse(res.text).should.deep.equal(postTestData2);
     });
   });
 
