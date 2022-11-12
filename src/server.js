@@ -10,66 +10,56 @@ const setupServer = () => {
     res.json({ test: 'Hello world' });
   });
 
-  app.get('/expenses', (req, res) => {
+  app.get('/expenses', async (req, res) => {
     const id = req.query.id;
+    let resData;
     if (typeof id === 'undefined') {
-      knex('expenses')
-        .select('*')
-        .then((result) => {
-          res.json(result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      resData = await selectAllData('expenses');
     } else if (id.match(/^[0-9]+$/)) {
-      knex('expenses')
-        .select('*')
-        .where({ id: id })
-        .then((result) => {
-          res.json(result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      resData = await selectData('expenses', id);
     }
+    res.json(resData);
   });
 
-  app.post('/expenses', (req, res) => {
+  app.post('/expenses', async (req, res) => {
     const postData = req.body;
-    let currentSequence;
-    knex('expenses')
-      .max('id')
-      .then((result) => {
-        currentSequence = result[0]['max'];
-        postData.id = currentSequence + 1;
-        knex('expenses')
-          .insert(postData)
-          .catch((err) => {
-            console.log(err);
-          });
-        res.json(postData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    let resData;
+    await insertData('expenses', postData);
+    // resData = await selectAllData('expenses');
+    // console.log(resData);
+    res.json(postData);
   });
 
   return app;
 };
 
-// async function getAllData(table) {
-//   let res;
-//   await knex(table)
-//     .select('*')
-//     .then((result) => {
-//       // console.log(result);
-//       return result;
-//     })
-//     .catch((err) => {
-//       res = err;
-//     });
-//   // console.log(res);
-//   // return res;
-// }
+function selectAllData(table) {
+  return knex(table)
+    .select('*')
+    .then((result) => result)
+    .catch((err) => console.log(err));
+}
+
+function selectData(table, id) {
+  return knex(table)
+    .select('*')
+    .where({ id: id })
+    .then((result) => result)
+    .catch((err) => console.log(err));
+}
+
+function insertData(table, postData) {
+  let currentSequence;
+  return knex(table)
+    .max('id')
+    .then((result) => {
+      currentSequence = result[0]['max'];
+      postData.id = currentSequence + 1;
+      knex(table)
+        .insert(postData)
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+}
 
 module.exports = { setupServer };

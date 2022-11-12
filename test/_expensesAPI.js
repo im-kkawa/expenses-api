@@ -6,7 +6,7 @@ chai.should();
 
 // npm run seedを実行するため
 const { execSync } = require('child_process');
-const defaultData = require('./_defaultData.json');
+let defaultData = require('./_defaultData.json');
 
 const { setupServer } = require('../src/server');
 const server = setupServer();
@@ -61,9 +61,11 @@ describe('expenses API Server', () => {
       request = chai.request(server);
     });
 
-    afterEach(() => {
-      stdout = execSync('npm run seed');
-      console.log(`stdout: ${stdout.toString()}`);
+    afterEach(async () => {
+      await execSync('npm run seed');
+      // stdout = await execSync('npm run seed');
+      // console.log(`stdout: ${stdout.toString()}`);
+      // defaultData = require('./_defaultData.json');
     });
 
     it('[post][/expenses]家計簿の登録', async () => {
@@ -98,7 +100,6 @@ describe('expenses API Server', () => {
       const res = await request.post('/expenses').send(postData);
 
       postData.id = 6;
-      defaultData.push(postData);
       const expected = defaultData;
       res.should.be.json;
       JSON.parse(res.text).should.deep.equal(postData);
