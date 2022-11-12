@@ -105,4 +105,23 @@ describe('expenses API Server', () => {
       JSON.parse(res.text).should.deep.equal(postData);
     });
   });
+
+  describe('deleteテスト', () => {
+    let request;
+
+    beforeEach(() => {
+      request = chai.request(server);
+    });
+
+    afterEach(async () => {
+      await execSync('npm run seed');
+    });
+
+    it('[delete][/expenses]家計簿の削除', async () => {
+      const testID = 3;
+      const res = await request.delete('/expenses').query({ id: testID });
+      res.should.be.json;
+      JSON.parse(res.text).should.deep.equal(testID);
+    });
+  });
 });

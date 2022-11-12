@@ -30,6 +30,16 @@ const setupServer = () => {
     res.json(postData);
   });
 
+  app.delete('/expenses', async (req, res) => {
+    const id = req.query.id;
+    knex('expenses')
+      .where({ id: id })
+      .del()
+      .catch((err) => console.log(err));
+
+    res.json(Number(id));
+  });
+
   return app;
 };
 
