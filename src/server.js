@@ -10,6 +10,10 @@ const setupServer = () => {
     res.json({ test: 'Hello world' });
   });
 
+  app.get('/health', (req, res) => {
+    res.status(200).send({ health: 'OK' });
+  });
+
   app.get('/expenses', async (req, res) => {
     const id = req.query.id;
     let resData;

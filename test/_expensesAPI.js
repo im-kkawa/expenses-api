@@ -4,14 +4,24 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 chai.should();
 
+require('dotenv').config({
+  path: './.env',
+});
+
 // npm run seedを実行するため
 const { execSync } = require('child_process');
-const defaultData = require('./_defaultData.json');
-const postTestData1 = require('./_postTestData1.json');
-const postTestData2 = require('./_postTestData2.json');
-const deleteTestData = require('./_deleteTestData.json');
-const patchTestData1 = require('./_patchTestData1.json');
-const patchTestData2 = require('./_patchTestData2.json');
+const defaultData = require(`./${process.env.RUN_ENV}/_defaultData.json`);
+const postTestData1 = require(`./${process.env.RUN_ENV}/_postTestData1.json`);
+const postTestData2 = require(`./${process.env.RUN_ENV}/_postTestData2.json`);
+const deleteTestData = require(`./${process.env.RUN_ENV}/_deleteTestData.json`);
+const patchTestData1 = require(`./${process.env.RUN_ENV}/_patchTestData1.json`);
+const patchTestData2 = require(`./${process.env.RUN_ENV}/_patchTestData2.json`);
+
+// const postTestData1 = require('./_postTestData1.json');
+// const postTestData2 = require('./_postTestData2.json');
+// const deleteTestData = require('./_deleteTestData.json');
+// const patchTestData1 = require('./_patchTestData1.json');
+// const patchTestData2 = require('./_patchTestData2.json');
 
 const { setupServer } = require('../src/server');
 const server = setupServer();
