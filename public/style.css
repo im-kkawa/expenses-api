@@ -1,0 +1,19 @@
+.endopoint {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.response_table {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.response_raw {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.response_data {
+  background-color: #eeeeee;
+  border: 2px solid #000000;
+}

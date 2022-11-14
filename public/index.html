@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>家計簿</title>
+    <script src="./index.js"></script>
+    <link href="./style.css" rel="stylesheet" />
+  </head>
+  <br>
+    <div class="endopoint">エンドポイント</div>
+    <div>
+      <button type="button" class="button_get">GET /expenses</button><br>
+      <label>ID：<input type="text" class="get_id"></label>
+    </div>
+    <br>
+    <div>
+      <button type="button" class="button_post">POST /expenses</button><br>
+      <label>日付：<input type="text" class="post_date"></label><br>
+      <label>カテゴリ：<input type="text" class="post_category"></label><br>
+      <label>メモ：<input type="text" class="post_note"></label><br>
+      <label>入金額：<input type="text" class="post_deposit"></label><br>
+      <label>出金額：<input type="text" class="post_withdrawal"></label><br>
+    </div>
+    <br>
+    <div>
+      <button type="button" class="button_delete">DELETE /expenses</button><br>
+      <label>ID：<input type="text" class="delete_id"></label>
+    </div>
+    <br>
+    <div>
+      <button type="button" class="button_patch">PATCH /expenses</button><br>
+      <label>ID：<input type="text" class="patch_id"></label><br>
+      <label>日付：<input type="text" class="patch_date"></label><br>
+      <label>カテゴリ：<input type="text" class="patch_category"></label><br>
+      <label>メモ：<input type="text" class="patch_note"></label><br>
+      <label>入金額：<input type="text" class="patch_deposit"></label><br>
+      <label>出金額：<input type="text" class="patch_withdrawal"></label><br>
+    </div>
+    <br>
+    <div class="response_table">レスポンス結果（表形式）</div>
+    <div class="table_area">
+      <table class="table" border="1">
+        <tr>
+          <th>ID</th>
+          <th>日付</th>
+          <th>カテゴリ</th>
+          <th>メモ</th>
+          <th>入金額</th>
+          <th>出金額</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <div class="response_raw">レスポンス結果（RAW）</div>
+    <div class="response_area">
+      <div class="response_data"></div>
+    </div>
+  </body>
+</html>

@@ -1,17 +1,16 @@
 const express = require('express');
 const config = require('../knexfile');
 const knex = require('knex')(config);
+const path = require('path');
 
 const setupServer = () => {
   const app = express();
+
+  app.use(express.static(path.join(__dirname, '../public')));
   app.use(express.json());
 
   app.get('/test', (req, res) => {
     res.json({ test: 'Hello world' });
-  });
-
-  app.get('/health', (req, res) => {
-    res.status(200).send({ health: 'OK' });
   });
 
   app.get('/expenses', async (req, res) => {
